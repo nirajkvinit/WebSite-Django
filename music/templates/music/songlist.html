@@ -1,0 +1,24 @@
+{% extends 'music/base.html' %}
+
+
+{% block body %}
+<div class="container">
+  <div class="page-header">
+<h1>Songs</h1>
+{% if all_songs %}
+
+    {% for song in all_songs %}
+
+        <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">{{song.album}}</div>
+      <div class="panel-body">{{song.song_title}}</div>
+    </div>
+        {% endfor %}
+
+{% else %}
+    <h2>You dont have any albums</h2>
+{% endif %}
+  </div>
+</div>
+{% endblock %}

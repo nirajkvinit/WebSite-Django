@@ -1,0 +1,37 @@
+{% extends "music/base.html" %}
+{% block title %}{{album.artist}}-{{album.album_title}}{% endblock %}
+{% block body %}
+
+<div class="container">
+  <div class="page-header">
+<h1>{{album.artist}}-{{album.album_title}}</h1>
+      <small>{{album.genre}}</small><br>
+<img src="{{album.album_logo.url}}" class="img-responsive" style="width:10%"/>
+
+{% if error_message %}
+    <p><strong>{{error_message}}</strong></p>
+{%endif%}
+
+<form action="{% url 'music:favorite' album.id %}" method="post" class="form-action">
+    {% csrf_token %}
+    {% for song in album.song_set.all %}
+
+        <input type="radio" id="song{{forloop.counter}}" name="song" value="{{song.id}}"/>
+
+        <label>
+            {{song.song_title}}
+
+            {% if song.is_favorite %}
+        <a href="#" class="btn btn-default btn-sm btn-favorite">
+            <span class="glyphicon glyphicon-star"></span>
+        </a>
+            {% endif %}
+        </label><br>
+    {% endfor %}
+    <input type="submit" class="btn btn-danger" value="Favorite">
+
+
+</form>
+</div>
+</div>
+{% endblock %}

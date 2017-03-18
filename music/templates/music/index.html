@@ -1,0 +1,36 @@
+{% extends 'music/base.html' %}
+
+
+{% block body %}
+
+<div class="container">
+  <div class="page-header">
+<h1>Album</h1>
+{% if all_albums %}
+
+    <ul class="list-group">
+        {% for album in all_albums %}
+        {% ifequal album.genre "Rap" %}
+        <li class="list-group-item list-group-item-danger">
+            {% else %}
+        <li class="list-group-item list-group-item-success">
+            {% endifequal %}
+            <a href="{% url 'music:detail' album.id %}">{{album.artist}}-{{album.album_title}}</a>
+         <form action="{% url 'music:album-delete' album.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="album_id" value="{{album.id}}"/>
+            <button type="submit" class="btn btn-default btn-sm">
+
+            <span class="glyphicon glyphicon-trash"></span>
+            </button>
+        </form>
+        </li>
+
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2>You dont have any albums</h2>
+{% endif %}
+  </div>
+</div>
+{% endblock %}
