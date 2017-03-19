@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Album,Song
+from .models import Album,Song,Comment,UserProfile
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout,get_user_model
 from django.views.generic import View
@@ -24,6 +24,12 @@ class DetailView(generic.DetailView):
     model=Album
     template_name = "music/detail.html"
 
+class Comments(generic.ListView):
+    template_name = "music/comment.html"
+    context_object_name = "all_comment"
+
+    def get_queryset(self):
+        return Comment.objects.all()
 
 def favorite(request, album_id):
     album = get_object_or_404(Album,pk=album_id)
@@ -57,6 +63,7 @@ class AlbumDelete(DeleteView):
 class SongView(generic.ListView):
     template_name = "music/songlist.html"
     context_object_name = "all_songs"
+
 
     def get_queryset(self):
         return Song.objects.all()
