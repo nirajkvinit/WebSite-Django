@@ -1,4 +1,6 @@
 from __future__ import unicode_literals
+
+import datetime
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.auth.models import User
@@ -26,3 +28,17 @@ class Song(models.Model):
 
     def __str__(self):
         return self.song_title
+
+class Comment(models.Model):
+    song=models.ForeignKey(Song,on_delete=models.CASCADE)
+    comment=models.CharField(max_length=250)
+
+    user=models.SET(User.username)
+    date = models.DateTimeField
+
+    def __str__(self):
+        return  self.comment
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    favorite = models.BooleanField(default=False)
