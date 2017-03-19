@@ -1,0 +1,19 @@
+{% extends "music/base.html" %}
+{% block title %}{{album.artist}}-{{album.album_title}}{% endblock %}
+{% block body %}
+{% if all_comment %}
+        {% for comment in all_comment %}
+<div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">{{comment.song.song_title}}</div>
+      <div class="panel-body">{{comment.comment}}
+         </div>
+    </div>
+</div>
+        {% endfor %}
+{% else %}
+    <h2>You dont have any albums</h2>
+{% endif %}
+
+
+{% endblock %}
