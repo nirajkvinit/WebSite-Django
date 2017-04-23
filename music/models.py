@@ -17,7 +17,7 @@ class Album(models.Model):
     def get_absolute_url(self):
         return reverse("music:detail",kwargs={"pk": self.pk})
 
-    def __str__(self):
+    def __unicode__(self):
         return self.album_title+"-"+self.artist
 
 class Song(models.Model):
@@ -26,7 +26,7 @@ class Song(models.Model):
     song_title=models.CharField(max_length=250)
     is_favorite=models.BooleanField(default=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.song_title
 
 class Comment(models.Model):

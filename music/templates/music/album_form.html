@@ -3,6 +3,7 @@
 {% block albums_active %}active{% endblock %}
 
 {%block body %}
+{% if user.is_authenticated %}
 <div class="container-fluid">
 
     <div class="row">
@@ -27,4 +28,5 @@
     </div>
 
 </div>
+{% endif %}
 {% endblock %}
