@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from music.views import login_user
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r"^music",include("music.urls")),
+    url(r"^",include("music.urls")),
     url(r"^login/", login_user, name="login"),
 
 ]
