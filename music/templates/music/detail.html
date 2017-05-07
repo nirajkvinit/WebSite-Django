@@ -12,26 +12,21 @@
     <p><strong>{{error_message}}</strong></p>
 {%endif%}
 
-<form action="{% url 'music:favorite' album.id %}" method="post" class="form-action">
-    {% csrf_token %}
     {% for song in album.song_set.all %}
 
-        <input type="radio" id="song{{forloop.counter}}" name="song" value="{{song.id}}"/>
-
+        <a href="{% url 'music:favorite' song.id %}"><span class="glyphicon glyphicon-star"></span></a>
         <label>
             {{song.song_title}}
-
             {% if song.is_favorite %}
-        <a href="#" class="btn btn-default btn-sm btn-favorite">
             <span class="glyphicon glyphicon-star"></span>
-        </a>
+            {% else %}
+            <span class="glyphicon glyphicon-remove"></span>
             {% endif %}
         </label><br>
     {% endfor %}
-    <input type="submit" class="btn btn-danger" value="Favorite">
 
 
-</form>
+
 </div>
 </div>
 {% endblock %}

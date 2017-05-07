@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.utils.datastructures import MultiValueDictKeyError
+
 from .models import Album,Song,Comment,UserProfile
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout,get_user_model
@@ -31,22 +33,15 @@ class Comments(generic.ListView):
     def get_queryset(self):
         return Comment.objects.all()
 
-def favorite(request, album_id):
-    album = get_object_or_404(Album,pk=album_id)
-    try:
-        selected_song=album.song_set.get(pk=request.POST['song'])
-    except (KeyError,Song.DoesNotExist):
-        return render(request,"music/detail.html",{
-            "album": album,
-            "error_message": "You Did not select a valid song",
-        })
+def favorite(request, id):
+    selected_song=get_object_or_404(Song,pk=id)
+    album=get_object_or_404(Album,id=selected_song.album.id)
+    if(selected_song.is_favorite==True):
+        selected_song.is_favorite=False
     else:
-        if(selected_song.is_favorite==True):
-            selected_song.is_favorite=False
-        else:
-            selected_song.is_favorite=True
-        selected_song.save()
-        return render(request,"music/detail.html",{"album": album})
+        selected_song.is_favorite=True
+    selected_song.save()
+    return render(request,"music/detail.html",{"album":album})
 
 class AlbumCreate(CreateView):
     model = Album
@@ -119,3 +114,12 @@ class ProfileView(generic.DetailView):
     slug_url_kwarg = 'name'
 
     template_name = "music/profile.html"
+
+def search_album(request):
+    if request.method=="POST":
+        search_text=request.POST['search']
+    else:
+        search_text=""
+    album=Album.objects.filter(album_title__contains=search_text)
+    return render(request,"music/search.html",{"albums":album,"search":search_text})
+

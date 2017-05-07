@@ -6,10 +6,12 @@
 <div class="container">
   <div class="page-header">
 <h1>Album</h1>
-{% if all_albums %}
+      <h1>Aradığınız kelime :{{search}} Bulunan Sonuç :{{albums.count}}</h1>
+
+{% if albums %}
 
     <ul class="list-group">
-        {% for album in all_albums %}
+        {% for album in albums %}
         {% ifequal album.genre "Rap" %}
         <li class="list-group-item list-group-item-danger">
             {% else %}
@@ -33,7 +35,7 @@
         {% endfor %}
     </ul>
 {% else %}
-    <h2>You dont have any albums</h2>
+    <h2>Aramaya uygun album yok</h2>
 {% endif %}
   </div>
 </div>

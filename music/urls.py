@@ -10,7 +10,7 @@ urlpatterns=[
     # /music/<album_id>/
     url(r'^(?P<pk>[0-9]+)/$',views.DetailView.as_view(),name="detail"),
     #/music/id/favorite
-    url(r'^(?P<album_id>[0-9]+)/favorite/$',views.favorite,name="favorite"),
+    url(r'^(?P<id>[0-9]+)/favorite/$',views.favorite,name="favorite"),
     #Album Add
     url(r'album/add/$',views.AlbumCreate.as_view(),name="album-add"),
     #Album Update
@@ -23,7 +23,8 @@ urlpatterns=[
     url(r'^login_user/$', views.login_user, name='login_user'),
     url(r'^logout_user/$', views.logout_user, name='logout_user'),
     url(r'^user/(?P<name>.*)/$', views.ProfileView.as_view(), name="profile"),
-
+    # search
+    url(r"^search/$", views.search_album, name="search"),
    # url(r'^/user/(?P<user_id>[0-9]+)/$', views.ProfileView.as_view(), name='profile'),
 
 ]

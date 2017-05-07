@@ -41,9 +41,10 @@
             </ul>
 
             <!-- Search -->
-            <form class="navbar-form navbar-left" role="search" method="get" action="#">
+            <form class="navbar-form navbar-left" role="search" method="post" action="{% url 'music:search' %}">
+                                        {% csrf_token %}
                 <div class="form-group">
-                    <input type="text" class="form-control" name="q" value="">
+                    <input type="text" class="form-control" name="search" value="" id="search">
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
             </form>
